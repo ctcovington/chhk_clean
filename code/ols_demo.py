@@ -1,6 +1,6 @@
 import os 
 import numpy as np 
-import new_algorithm as na 
+import algorithm as na 
 import sklearn.datasets as skld
 import statsmodels.api as sm
 import pandas as pd 
