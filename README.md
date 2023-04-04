@@ -3,7 +3,7 @@
 This version of the [CHHK21](https://arxiv.org/abs/2110.14465) code is cleaned and simplified from the full version in the private repository. Namely, we simplify in the following ways:
 
 1. Assume sampling distribution of the estimator (i.e. output from sample-aggregate) is sub-Gaussian
-2. Assume the analyst wants only confidence intervals and not the full covariance matrix. An approximation of the covariance matrix is still given, but it is required to be a diagonal matrix.
+2. Assume the analyst wants only confidence intervals and not the full covariance matrix. To this end, the algorithm estimates only the variances (rather than the full covariance matrix).
 
 - `coinpress_generalized.py`: code for CoinPress mean estimation
 - `algorithm.py`: overall algorithm from CHHK21
