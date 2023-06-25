@@ -74,12 +74,19 @@ for rho in rho_list:
                                                                     scalable = scalable, 
                                                                     estimator = estimator, dependent_var = 'y')
             gvdp_overest_factor = 100
+
+            # set bounds on mean/variance
+            # NOTE: for testing purposes, we set these bounds 100 times larger than the actual bootstrapped estimates we get above
+            #       in the real world, we wouldn't get to see these bootstrapped estimates and the bounds would be set 
+            #       based on user knowledge
             cov_cov_u = gvdp_overest_factor * np.diag(np.cov(np.array([np.diag(c) for c in blb_cov_ests]).T))
             mean_cov_u = gvdp_overest_factor * np.diag(np.cov(blb_mean_ests.T))
             cov_c = np.diag(np.mean(blb_cov_ests, axis = 0)); cov_r = gvdp_overest_factor * max(np.diag(np.mean(blb_cov_ests, axis=0)))
             mean_c = np.mean(blb_mean_ests, axis = 0); mean_r = gvdp_overest_factor * max(np.mean(blb_mean_ests, axis = 0))
-            t_cov = 5; t_mean = 5
-            beta = 0.1
+
+            # set hyperparameters
+            t_cov = 5; t_mean = 5 # number of iterations to run coinpress
+            beta = 0.1 # overall failure probability
             rho_mean_budget_prop, rho_cov_budget_prop, beta_mean_budget_prop, beta_cov_budget_prop = (0.5, 0.5, 0.5, 0.5)
             ci_alphas = [0.05] * d
             scalable = True
@@ -89,7 +96,7 @@ for rho in rho_list:
 
             priv_coefs, priv_cov, priv_CIs = na.general_valid_dp(data, k, 
                                                                 blb_sims,
-                                                                cov_cov_u, # TODO: need to state this in a way that scales to arbitrary degree 
+                                                                cov_cov_u, 
                                                                 cov_c, cov_r,
                                                                 mean_c, mean_r,
                                                                 t_cov, t_mean, 
